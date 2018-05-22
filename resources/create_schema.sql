@@ -8,6 +8,7 @@ ACCOUNT UNLOCK;
 -- privileges
 grant create procedure to cloud_service;
 grant create sequence to cloud_service;
+grant create view to cloud_service;
 grant create session to cloud_service;
 grant create synonym to cloud_service;
 grant create table to cloud_service;

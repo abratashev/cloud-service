@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 
 @SpringBootApplication
+@EnableScheduling
 public class Example {
 
     @Autowired
