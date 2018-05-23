@@ -24,10 +24,10 @@ public class Profiler {
     private static final String viewQuery = "SELECT * FROM ALL_TIMESTAMPS WHERE TIME_STAMP > ? AND TIME_STAMP < ?";
 
     String profileViewQuery(Timestamp timestamp1, Timestamp timestamp2) {
-        long start = System.nanoTime();
+        long start = System.currentTimeMillis();
         List<Map<String, Object>> timestampObjectList =
                 jdbcTemplate.queryForList(viewQuery, timestamp1, timestamp2);
-        long elapsed = System.nanoTime() - start;
+        long elapsed = System.currentTimeMillis() - start;
         timestampObjectList.forEach(timestampObject ->
                 log.info(
                         "timestamp: " + timestampObject.get("TIME_STAMP") +
@@ -41,17 +41,17 @@ public class Profiler {
 
 
     String profileFunctionQuery(Timestamp timestamp1, Timestamp timestamp2) {
-        long start = System.nanoTime();
+        long start = System.currentTimeMillis();
         LocalDateTime dt1 = timestamp1.toLocalDateTime();
         LocalDateTime dt2 = timestamp2.toLocalDateTime();
-        LocalDateTime current = dt1;
+        LocalDateTime current = dt1.withNano(0);
         List<Map<String, Object>> timestampObjectList = new ArrayList<>();
         while (current.isBefore(dt2)) {
             String tableName = "tablename_" + current.format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss"));
             timestampObjectList.addAll(jdbcTemplate.queryForList("SELECT * FROM " + tableName + " WHERE TIME_STAMP > ? AND TIME_STAMP < ?", timestamp1, timestamp2));
             current = current.plusSeconds(1);
         }
-        long elapsed = System.nanoTime() - start;
+        long elapsed = System.currentTimeMillis() - start;
         timestampObjectList.forEach(timestampObject ->
                 log.info(
                         "timestamp: " + timestampObject.get("TIME_STAMP") +

@@ -21,8 +21,8 @@ public class Main {
     Profiler profiler;
 
     //TODO Переписать как RequestParams
-    private Timestamp timestamp1 = Timestamp.valueOf("2018-05-23 02:47:50.11");
-    private Timestamp timestamp2 = Timestamp.valueOf("2018-05-23 02:47:51.33");
+    private Timestamp timestamp1 = Timestamp.valueOf("2018-05-23 03:01:11.11");
+    private Timestamp timestamp2 = Timestamp.valueOf("2018-05-23 03:01:12.43");
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
