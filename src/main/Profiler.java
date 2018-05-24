@@ -23,10 +23,21 @@ public class Profiler {
 
     private static final String viewQuery = "SELECT * FROM ALL_TIMESTAMPS WHERE TIME_STAMP > ? AND TIME_STAMP < ?";
 
+    private static final String tableQuery = "SELECT * FROM ALL_TIMESTAMPS_TABLE WHERE TIME_STAMP > ? AND TIME_STAMP < ?";
+
     String profileViewQuery(Timestamp timestamp1, Timestamp timestamp2) {
+        return profileQuery(viewQuery, timestamp1, timestamp2);
+    }
+
+
+    String profileTableQuery(Timestamp timestamp1, Timestamp timestamp2) {
+        return profileQuery(tableQuery, timestamp1, timestamp2);
+    }
+
+    private String profileQuery(String query, Timestamp timestamp1, Timestamp timestamp2) {
         long start = System.currentTimeMillis();
         List<Map<String, Object>> timestampObjectList =
-                jdbcTemplate.queryForList(viewQuery, timestamp1, timestamp2);
+                jdbcTemplate.queryForList(query, timestamp1, timestamp2);
         long elapsed = System.currentTimeMillis() - start;
         timestampObjectList.forEach(timestampObject ->
                 log.info(
@@ -38,7 +49,6 @@ public class Profiler {
         log.info(result);
         return result;
     }
-
 
     String profileFunctionQuery(Timestamp timestamp1, Timestamp timestamp2) {
         long start = System.currentTimeMillis();
